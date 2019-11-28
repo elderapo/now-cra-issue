@@ -1,0 +1,64 @@
+{
+  "version": 2,
+  "name": "now-serverless-typescript-fullstack",
+  "regions": ["cdg1", "bru1"],
+  "builds": [
+    {
+      "src": "packages/frontend/package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest": "packages/frontend/static/$1"
+    },
+    { "src": "/favicon.ico", "dest": "packages/frontend/favicon.ico" },
+    {
+      "src": "/asset-manifest.json",
+      "dest": "packages/frontend/asset-manifest.json"
+    },
+    { "src": "/manifest.json", "dest": "packages/frontend/manifest.json" },
+    {
+      "src": "/precache-manifest.(.*)",
+      "dest": "packages/frontend/precache-manifest.$1"
+    },
+    {
+      "src": "/service-worker.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/service-worker.js"
+    },
+    {
+      "src": "/sockjs-node/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/sockjs-node/$1"
+    },
+    {
+      "src": "/__webpack_dev_server__/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/__webpack_dev_server__/$1"
+    },
+    {
+      "src": "/(.*).hot-update.js.map",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/$1.hot-update.js.map"
+    },
+    {
+      "src": "/(.*).hot-update.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/$1.hot-update.js"
+    },
+    {
+      "src": "/(.*).hot-update.json",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/$1.hot-update.json"
+    },
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "packages/frontend/index.html"
+    }
+  ]
+}

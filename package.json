@@ -1,0 +1,76 @@
+{
+  "private": true,
+  "name": "now-serverless-typescript-fullstack",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "now dev",
+    "test": "jest",
+    "start-dev-database": "docker-compose -f ./packages/dev-database/docker-compose.yml up",
+    "typeorm": "yarn --cwd packages/backend typeorm",
+    "__check-if-git-is-not-on-production-branch": "git-branch-is -r \"^((?!production).)*$\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn __check-if-git-is-not-on-production-branch"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.1",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-react-app": "^5.0.0",
+    "eslint-plugin-flowtype": "^3.13.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^1.18.2",
+    "typescript": "3.5.3"
+  },
+  "_eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "react-app",
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "useJSXTextNode": true,
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": "./"
+    },
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "node": true,
+      "jest": true
+    },
+    "settings": {
+      "react": {
+        "version": "16.8"
+      }
+    },
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": 0
+    }
+  },
+  "dependencies": {
+    "git-branch-is": "^3.1.0",
+    "husky": "^4.0.0-beta.5",
+    "now": "^16.6.0"
+  }
+}
